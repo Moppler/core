@@ -43,6 +43,8 @@ class Account {
   }
 
   /**
+   * Returns the character with a name matching the one specified. If there
+   * isn't a matching character, NULL is returned.
    * @param {string} name
    * @return {boolean}
    */
@@ -51,12 +53,21 @@ class Account {
   }
 
   /**
+   * Marks the specified character as deleted if it exists.
    * @param {string} name Delete one of the chars
+   * @returns {boolean} Boolean reflecting result of operation.
    */
   deleteCharacter(name) {
-    var picked = this.characters.find(c => c.username === name);
-    picked.deleted = true;
+    const character = this.characters
+      .find(char => char.username === name);
+
+    if(!character) {
+      return false;
+    }
+
+    character.deleted = true;
     this.save();
+    return true;
   }
 
   /**

@@ -1,4 +1,5 @@
 const assert = require('assert');
+const sinon = require('sinon');
 
 const Account = require('../../src/Account');
 
@@ -124,6 +125,42 @@ describe('Class Account',  function() {
       assert.deepEqual(
         result,
         { username: 'testuser' }
+      );
+    });
+  });
+  describe('Function: deleteCharacter', function() {
+    it('marks the specified character as deleted', function() {
+      const account = new Account({
+        characters: [{ username: 'testuser', deleted: false }]
+      });
+
+      const saveStub = sinon.stub(account, 'save');
+
+      const deleteStatus = account.deleteCharacter('testuser');
+
+      assert.ok(
+        deleteStatus,
+        'The method returned true'
+      );
+      assert.equal(
+        account.characters[0].deleted,
+        true,
+        'The character has been marked as deleted'
+      );
+      assert.ok(
+        saveStub.called,
+        'The save method was called.'
+      );
+    });
+    it('can handle requests to delete non-existant characters', function() {
+      const account = new Account({});
+
+      const deleteStatus = account.deleteCharacter('doesnotexist');
+
+      assert.equal(
+        deleteStatus,
+        false,
+        'The method returned false, no delete occurred.'
       );
     });
   });
