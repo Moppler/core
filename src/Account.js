@@ -27,17 +27,19 @@ class Account {
   }
 
   /**
-   * @return {string}
+   * Returns the current value of the username attribute for the object.
+   * @return {string} username
    */
   getUsername() {
     return this.username;
   }
 
   /**
+   * Adds a new character to the account.
    * @param {string} username
    */
   addCharacter(username) {
-    this.characters.push({ username: username, deleted : false});
+    this.characters.push({ username: username, deleted: false});
   }
 
   /**
